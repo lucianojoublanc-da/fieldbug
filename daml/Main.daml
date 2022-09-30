@@ -22,4 +22,4 @@ template Asset
         newOwner : Party
       controller owner
       do create this with
-           owner = (party : Foo -> Party) (Foo newOwner)
+           owner = party (Foo newOwner)
