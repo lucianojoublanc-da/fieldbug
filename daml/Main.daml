@@ -1,0 +1,25 @@
+module Main where
+
+import Daml.Script hiding (party)
+
+type AssetId = ContractId Asset
+
+data Foo = Foo with party : Party
+
+data Bar = Bar with party : Party
+
+template Asset
+  with
+    issuer : Party
+    owner  : Party
+    name   : Text
+  where
+    ensure name /= ""
+    signatory issuer
+    observer owner
+    choice Give : AssetId
+      with
+        newOwner : Party
+      controller owner
+      do create this with
+           owner = (party : Foo -> Party) (Foo newOwner)
